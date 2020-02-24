@@ -4,7 +4,14 @@ En este repositorio se realiza un servidor web que soporta múltiples solicitude
 
 ## Link Heroku
 
+En este link se encuentra el desarrollo del trabajo desplegado en Heroku
+
 - https://arep-lab-04.herokuapp.com/carro.jpg
+
+Como se puede ver en esta imagen:
+
+![Imagenes](https://github.com/checho1998/AREP-LAB-04/blob/master/imagenes/carro.PNG)
+
 
 ## Como Instalar y Correr el Codigo
 
@@ -26,7 +33,7 @@ $ mvn test
 mvn exec:java -Dexec.mainClass="com.example.Main" [-Dexec.args="argument1"]
 ```
 
-![Imagenes](https://github.com/checho1998/AREP-Lab-03/blob/master/imagenes/correr.PNG)
+![Imagenes](https://github.com/checho1998/AREP-LAB-04/blob/master/imagenes/correr.PNG)
 
 
 ## Construido en lenguaje

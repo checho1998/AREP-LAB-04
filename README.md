@@ -2,6 +2,8 @@
 
 En este repositorio se realiza un servidor web que soporta múltiples solicitudes seguidas (no concurrentes). El servidor debe retorna todos los archivos solicitados, incluyendo páginas html e imágenes, utilizando los Sockts desde el servidor.
 
+## Link Heroku
+
 ## Como Instalar y Correr el Codigo
 
 - Debe estar en el directorio donde quiere traer el repositorio

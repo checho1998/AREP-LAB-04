@@ -1,4 +1,4 @@
-# LABORATORIO AREP - 03
+# LABORATORIO AREP - 04
 
 En este repositorio se realiza un servidor web que soporta múltiples solicitudes seguidas (no concurrentes). El servidor debe retorna todos los archivos solicitados, incluyendo páginas html e imágenes, utilizando los Sockts desde el servidor.
 

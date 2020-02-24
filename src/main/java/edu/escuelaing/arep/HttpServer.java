@@ -20,10 +20,10 @@ import java.awt.image.BufferedImage;
 
 public class HttpServer implements Runnable {
 	
-	private static ListaURLHandler handler;
+	//private static ListaURLHandler handler;
 	
     public static void main(String[] args) throws IOException {
-    	handler = new ListaURLHandler();
+    	//handler = new ListaURLHandler();
     	
         ServerSocket serverSocket = null;
         int puerto = getPort();

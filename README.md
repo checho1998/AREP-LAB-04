@@ -10,7 +10,7 @@ En este link se encuentra el desarrollo del trabajo desplegado en Heroku
 
 Como se puede ver en esta imagen:
 
-![Imagenes](https://github.com/checho1998/AREP-LAB-04/blob/master/imagenes/carro.PNG)
+![Imagenes](https://github.com/checho1998/AREP-LAB-04/blob/master/imagenes/Carro.PNG)
 
 
 ## Como Instalar y Correr el Codigo

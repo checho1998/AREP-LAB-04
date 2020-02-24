@@ -4,20 +4,20 @@
 'Cp1252'
 -protected
 -sourcepath
-'C:/Users/chech/Downloads/AREP-Lab-03/src/main/java'
+'C:/Users/chech/Downloads/AREP_LAB_04/src/main/java'
 -author
 -bottom
 'Copyright &#169; 2020. All rights reserved.'
 -charset
 'UTF-8'
 -d
-'C:/Users/chech/Downloads/AREP-Lab-03/target/site/apidocs'
+'C:/Users/chech/Downloads/AREP_LAB_04/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
 'SparkWebApp 1.0-SNAPSHOT API'
 -linkoffline
-'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/chech/Downloads/AREP-Lab-03/target/javadoc-bundle-options'
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/chech/Downloads/AREP_LAB_04/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle

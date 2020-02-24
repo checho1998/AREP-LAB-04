@@ -1,8 +1,8 @@
-package edu.escuelaing.arep.impl;
+package edu.escuelaing.arep.Handss.impl;
 
 import java.lang.reflect.Method;
 
-import edu.escuelaing.arep.Handler;
+import edu.escuelaing.arep.Handss.Handler;
 
 public class methodHandler implements Handler {
     private Method metodo;

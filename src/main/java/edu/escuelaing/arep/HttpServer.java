@@ -11,6 +11,7 @@ package edu.escuelaing.arep;
  */
 
 import java.net.*;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -18,124 +19,119 @@ import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HttpServer implements Runnable {
-	
-	//private static ListaURLHandler handler;
-	
-    public static void main(String[] args) throws IOException {
-    	//handler = new ListaURLHandler();
-    	
-        ServerSocket serverSocket = null;
-        int puerto = getPort();
-        while (true) {
-        	
-        
-        try {
-            serverSocket = new ServerSocket(puerto);
-            System.out.println(puerto);
-        } catch (IOException e) {
-            System.err.println("Could not listen on port:" + getPort());
-            System.exit(1);
-            System.out.println(puerto);
-        }
+public class HttpServer implements Runnable{
 
-        Socket clientSocket = null;
-        try {
-            System.out.println("Listo para recibir ...");
-            clientSocket = serverSocket.accept();
-        } catch (IOException e) {
-            System.err.println("Accept failed.");
-            System.exit(1);
-        }
-        PrintWriter out = new PrintWriter(
-                clientSocket.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-        
-        String inputLine, outputLine,inputLinee;
-        
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println("Recib�: " + inputLine);
-            if (inputLine.contains("GET")) {
-            	String[] palabra = inputLine.split("/");
-                String [] palabra2 =  palabra[1].split(" ");
-                if(inputLine.contains(palabra2[0])) {
-                	if(palabra2[0].contains(".jpg")) {
-                		imagen("/src/main/Resource/"+palabra2[0],clientSocket.getOutputStream(),out);
-                	}
-                	else if(palabra2[0].contains(".html")) {
-                		leenos("/src/main/Resource/"+palabra2[0],out);
-                	}
-                	else if(palabra2[0].contains(".js")){
-                        leenos("/src/main/Resource/"+palabra2[0],out);
-                	}
-                	else{
-                		leenos("/src/main/Resource/Perdido.html",out);
-                    }
-                }
-            }
-            
-            if (!in.ready()) {break; }
-            	
-            
-        }
-        out.close();
-        in.close();
-        clientSocket.close();
-        serverSocket.close();
-        }
-    }
+	private Socket clientSocket;
 
 
-    static int getPort() {
-        if (System.getenv("PORT") != null) {
-            return Integer.parseInt(System.getenv("PORT"));
-        }
-        return 4567;
-    }
-    private static void imagen(String element, OutputStream clientOutput, PrintWriter out) throws IOException {
-        try {
-            BufferedImage image = ImageIO.read(new File(System.getProperty("user.dir") + element));
-            ByteArrayOutputStream ArrBytes = new ByteArrayOutputStream();
-            DataOutputStream writeimg = new DataOutputStream(clientOutput);
-            String imagen = "HTTP/1.1 404 Not Found \r\n"
-                    + "Content-Type: text/html; charset=\"utf-8\" \r\n"
-                    + "\r\n";
-            //out.write(imagen.getBytes());
-            ImageIO.write(image, "PNG", ArrBytes);
-            writeimg.writeBytes("HTTP/1.1 200 OK \r\n");
-            writeimg.writeBytes("Content-Type: image/png \r\n");
-            writeimg.writeBytes("\r\n");
-            writeimg.write(ArrBytes.toByteArray());
-            System.out.println(System.getProperty("user.dir") + "/resources/imagenes/" + element);
-        } catch (IOException e) {
-        }
-
-    }
-    
-    public static void leenos(String pag, PrintWriter out) {
-        BufferedReader intermedio;
-             try {//abrimos comunicaci�n (buffer)
-            	 intermedio= new BufferedReader (new FileReader(System.getProperty("user.dir")+pag));
-                 String text_linea="";
-                 out.println("HTTP/1.1 200 OK \r\n\\r\\n");
-            	 //out.println("Content-Type: text/html\r\n");
-            	 //out.println("\r\n");
-                 while(text_linea!= null) {
-                	 text_linea = intermedio.readLine();
-                	 //System.out.println(text_linea);
-                	 out.println(text_linea);
-                    }
-             } catch (IOException e) {
-            	 System.out.println("Mira si el archivo se encuentra en su sitio porque yo no lo veo");
-            	 e.printStackTrace();
-             }
-       }
-
-
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	public HttpServer(Socket clientSocket) {
+		this.clientSocket = clientSocket;
 	}
-    
+	/**
+	 * realiza todas las operaciones necesarias para que inicie el servidor y 
+	 * revise lo que se le escribe en el para asi retornar el recurso que se le pide.
+	 * @param args
+	 * @throws IOException
+	 */
+
+	@Override
+	public void run(){
+
+		try {
+			PrintWriter out = new PrintWriter(
+					clientSocket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(clientSocket.getInputStream()));
+
+			String inputLine;
+
+			try {
+				if ((inputLine = in.readLine()) != null) {
+					//System.out.println("Recib�: " + inputLine);
+					if (inputLine.contains("GET")) {
+
+						String[] palabra = inputLine.split("/");
+						String [] palabra2 =  palabra[1].split(" ");
+
+						if(inputLine.contains(palabra2[0])) {
+							if(palabra2[0].contains(".jpg")) {
+								imagen("/src/main/Resource/"+palabra2[0],clientSocket.getOutputStream(),out);
+							}
+							else if(palabra2[0].contains(".html")) {
+								leenos("/src/main/Resource/"+palabra2[0],out);
+							}
+							else if(palabra2[0].contains(".js")){
+								leenos("/src/main/Resource/"+palabra2[0],out);
+							}
+							else{
+								leenos("/src/main/Resource/Perdido.html",out);
+							}
+						}
+					}
+					//serverSocket.close();
+				}
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			out.close();
+			in.close();
+			clientSocket.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	/**
+	 * Metodo que recibe una direccion para asi poder buscar la imagen y mostrarla en la pagina
+	 * @param element
+	 * @param clientOutput
+	 * @param out
+	 * @throws IOException
+	 */
+	private static void imagen(String element, OutputStream clientOutput, PrintWriter out) throws IOException {
+		try {
+			BufferedImage image = ImageIO.read(new File(System.getProperty("user.dir") + element));
+			ByteArrayOutputStream ArrBytes = new ByteArrayOutputStream();
+			DataOutputStream writeimg = new DataOutputStream(clientOutput);
+			String imagen = "HTTP/1.1 404 Not Found \r\n"
+					+ "Content-Type: text/html; charset=\"utf-8\" \r\n"
+					+ "\r\n";
+			//out.write(imagen.getBytes());
+			ImageIO.write(image, "PNG", ArrBytes);
+			writeimg.writeBytes("HTTP/1.1 200 OK \r\n");
+			writeimg.writeBytes("Content-Type: image/png \r\n");
+			writeimg.writeBytes("\r\n");
+			writeimg.write(ArrBytes.toByteArray());
+			//System.out.println(System.getProperty("user.dir") + "/resources/imagenes/" + element);
+		} catch (IOException e) {
+		}
+
+	}
+	/**
+	 * Metodo que recibe una direccion para asi poder buscar el html y mostrarlo en la pagina
+	 * @param pag
+	 * @param out
+	 */
+	public static void leenos(String pag, PrintWriter out) {
+		BufferedReader intermedio;
+		try {//abrimos comunicaci�n (buffer)
+			intermedio= new BufferedReader (new FileReader(System.getProperty("user.dir")+pag));
+			String text_linea="";
+			out.println("HTTP/1.1 200 OK \r\n\\r\\n");
+			//out.println("Content-Type: text/html\r\n");
+			//out.println("\r\n");
+			while(text_linea!= null) {
+				text_linea = intermedio.readLine();
+				//System.out.println(text_linea);
+				out.println(text_linea);
+			}
+		} catch (IOException e) {
+			System.out.println("Mira si el archivo se encuentra en su sitio porque yo no lo veo");
+			e.printStackTrace();
+		}
+	}
+
+
+
 }

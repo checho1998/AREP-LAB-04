@@ -15,6 +15,8 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import edu.escuelaing.arep.newAnotacion.Web;
+
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -115,15 +117,13 @@ public class HttpServer implements Runnable{
 	 */
 	public static void leenos(String pag, PrintWriter out) {
 		BufferedReader intermedio;
-		try {//abrimos comunicaci�n (buffer)
+		try {
 			intermedio= new BufferedReader (new FileReader(System.getProperty("user.dir")+pag));
 			String text_linea="";
 			out.println("HTTP/1.1 200 OK \r\n\\r\\n");
-			//out.println("Content-Type: text/html\r\n");
-			//out.println("\r\n");
 			while(text_linea!= null) {
 				text_linea = intermedio.readLine();
-				//System.out.println(text_linea);
+				System.out.println(text_linea);
 				out.println(text_linea);
 			}
 		} catch (IOException e) {

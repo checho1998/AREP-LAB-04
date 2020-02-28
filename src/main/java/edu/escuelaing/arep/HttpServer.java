@@ -60,10 +60,10 @@ public class HttpServer implements Runnable{
 								imagen("/src/main/Resource/"+palabra2[0],clientSocket.getOutputStream(),out);
 							}
 							else if(palabra2[0].contains(".html")) {
-								leenos("/src/main/Resource/"+palabra2[0],out);
+								leenos("src/main/Resource/"+palabra2[0],out);
 							}
 							else if(palabra2[0].contains(".js")){
-								leenos("/src/main/Resource/"+palabra2[0],out);
+								leenos("src/main/Resource/"+palabra2[0],out);
 							}
 							else {
 								out.println("HTTP/1.1 404 Not Found \r\nContent-Type: text/html \r\n\r\n <!DOCTYPE html> <html>"
@@ -120,8 +120,7 @@ public class HttpServer implements Runnable{
 	public static void leenos(String pag, PrintWriter out) {
 		BufferedReader intermedio;
 		try {
-			intermedio= new BufferedReader (new FileReader(System.getProperty("user.dir")+pag));
-			//out.println("HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n");
+			intermedio= new BufferedReader (new FileReader(pag));
 			String text_linea="";
 			out.println("HTTP/1.1 200 OK \r\n\\r\\n");
 			while((text_linea= intermedio.readLine()) != null) {

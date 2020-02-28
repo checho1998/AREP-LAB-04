@@ -121,11 +121,11 @@ public class HttpServer implements Runnable{
 		BufferedReader intermedio;
 		try {
 			intermedio= new BufferedReader (new FileReader(System.getProperty("user.dir")+pag));
+			//out.println("HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n");
 			String text_linea="";
 			out.println("HTTP/1.1 200 OK \r\n\\r\\n");
-			while(text_linea!= null) {
-				text_linea = intermedio.readLine();
-				//System.out.println(text_linea);
+			while((text_linea= intermedio.readLine()) != null) {
+				System.out.println(text_linea);
 				out.println(text_linea);
 			}
 		} catch (IOException e) {

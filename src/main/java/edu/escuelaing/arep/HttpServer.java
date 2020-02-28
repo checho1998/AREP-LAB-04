@@ -65,8 +65,10 @@ public class HttpServer implements Runnable{
 							else if(palabra2[0].contains(".js")){
 								leenos("/src/main/Resource/"+palabra2[0],out);
 							}
-							else{
-								leenos("/src/main/Resource/Perdido.html",out);
+							else {
+								out.println("HTTP/1.1 404 Not Found \r\nContent-Type: text/html \r\n\r\n <!DOCTYPE html> <html>"
+					                    + "<head><title>404</title></head>" + "<body> <h1>404 Not Found " 
+					                    + "</h1></body></html>");
 							}
 						}
 					}
@@ -123,7 +125,7 @@ public class HttpServer implements Runnable{
 			out.println("HTTP/1.1 200 OK \r\n\\r\\n");
 			while(text_linea!= null) {
 				text_linea = intermedio.readLine();
-				System.out.println(text_linea);
+				//System.out.println(text_linea);
 				out.println(text_linea);
 			}
 		} catch (IOException e) {
